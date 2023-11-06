@@ -1,6 +1,7 @@
 import react, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import Camara from '../../components/Camara/Camara';
 
 class PostForm extends Component {
     constructor(){
@@ -26,6 +27,8 @@ class PostForm extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
+                <Text>Aca esta la camara</Text>
+                <Camara/>
                 <Text>New Post</Text>
                 <TextInput
                     style={styles.input}
