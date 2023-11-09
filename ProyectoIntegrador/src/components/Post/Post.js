@@ -7,7 +7,6 @@ class Post extends Component {
 
     constructor(props){
         super(props);
-
         this.state = {
             like: false,
             cantidadDeLikes: this.props.dataPost.datos.likes.length
@@ -56,7 +55,6 @@ class Post extends Component {
 
 
     render(){
-        console.log(this.props)
         return (
             <View>
                 <Text>{ this.props.dataPost.datos.owner }</Text>
@@ -74,12 +72,6 @@ class Post extends Component {
                             <Text style={styles.textButton}>Likear</Text>    
                         </TouchableOpacity>
                 }
-                
-
-                
-
-
-
             </View>
 
         )

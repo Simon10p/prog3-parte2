@@ -1,4 +1,4 @@
-import { auth } from '../../firebase/config';
+import {db, auth } from '../../firebase/config';
 import React, {Component} from "react";
 import {View, Text, TouchableOpacity, StyleSheet, TextInput} from "react-native";
 
@@ -28,8 +28,7 @@ class Register extends Component{
         } )
 
     }
-
-    register(email, pass){
+    register(email, pass, userName){
         auth.createUserWithEmailAndPassword(email, pass)
         .then( response => {
             //Cuando firebase responde sin error
@@ -39,10 +38,11 @@ class Register extends Component{
 
             //Crear una colección Users
             db.collection('users').add({
-                owner:auth.currentUser.email,
+                email: auth.currentUser.email,
                 userName: userName,
                 createdAt: Date.now(),
             })
+
             .then( res => console.log(res))
 
         })
@@ -54,38 +54,40 @@ class Register extends Component{
 }
      
       render(){
-        <View style={styles.formContainer}>
-          <Text>Register</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(text)=>this.setState({email: text})}
-                    placeholder='email'
-                    keyboardType='email-address'
-                    value={this.state.email}
-                    />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(text)=>this.setState({userName: text})}
-                    placeholder='user name'
-                    keyboardType='default'
-                    value={this.state.userName}
-                    />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(text)=>this.setState({password: text})}
-                    placeholder='password'
-                    keyboardType='email-address'
-                    secureTextEntry={true}
-                    value={this.state.password}
-                />
-                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password)}>
-                    <Text style={styles.textButton}>Registrarse</Text>    
-                </TouchableOpacity>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
-                   <Text>Ya tengo cuenta. Ir al login</Text>
-                </TouchableOpacity>
-        </View>
-      }
+        return(
+<View style={styles.formContainer}>
+        <Text>Register</Text>
+              <TextInput
+                  style={styles.input}
+                  onChangeText={(text)=>this.setState({email: text})}
+                  placeholder='email'
+                  keyboardType='email-address'
+                  value={this.state.email}
+                  />
+              <TextInput
+                  style={styles.input}
+                  onChangeText={(text)=>this.setState({userName: text})}
+                  placeholder='user name'
+                  keyboardType='default'
+                  value={this.state.userName}
+                  />
+              <TextInput
+                  style={styles.input}
+                  onChangeText={(text)=>this.setState({password: text})}
+                  placeholder='password'
+                  keyboardType='email-address'
+                  secureTextEntry={true}
+                  value={this.state.password}
+              />
+              <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName)}>
+                  <Text style={styles.textButton}>Registrarse</Text>    
+              </TouchableOpacity>
+              <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
+                 <Text>Ya tengo cuenta. Ir al login</Text>
+              </TouchableOpacity>
+      </View> 
+        )  
+    }
 }
 
 const styles = StyleSheet.create({
