@@ -34,7 +34,7 @@ class Home extends Component {
                 })
              })   
              this.setState({
-                post:postAMostrar
+                posts:postAMostrar
              })
 
 

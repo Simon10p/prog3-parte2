@@ -9,7 +9,7 @@ class Post extends Component {
         super(props);
         this.state = {
             like: false,
-            cantidadDeLikes: this.props.dataPost.datos.likes.length
+          //  cantidadDeLikes: this.props.dataPost.datos.likes.length
         }
     }
 
@@ -63,7 +63,7 @@ class Post extends Component {
                 {
                     this.state.like ?
                         <TouchableOpacity style={styles.button} onPress={()=>this.unlike()}>
-                            <Text style={styles.textButton}>unLike</Text>    
+                            <Text style={styles.textButton}>Unlike</Text>    
                         </TouchableOpacity>
 
                         :

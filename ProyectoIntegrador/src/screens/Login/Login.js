@@ -24,7 +24,7 @@ class Login extends Component {
     login(email,pass){
         auth.signInWithEmailAndPassword(email, pass)
              .then( res => {
-                 this.props.navigation.navigate("TabNavigation")
+                 this.props.navigation.navigate("Home")
     })
             .catch(error => 
                  this.setState({

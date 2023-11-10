@@ -34,27 +34,109 @@ class Camara extends Component{
         .catch( e=> console.log(e))
     }
     sacarFotos(){
+        this.metodosDeCamara.takePictureAsync()
+        .then(foto => {
+            this.setState({
+                urlInternaFoto: foto.uri,
+                mostrarCamara: false
+            })
+        })
+        .catch(e => console.log(e))
+    }
 
+    rechazarFoto(){
+        this.setState({
+            showCamera: true,
+        })
     }
 
     guardarLaFotoEnStorage(){
-        
+        fetch(this.state.urlInternaFoto)
+        .then(res => res.blob())
+        .then(imagen => {
+           const ref = storage.ref(`foto/${Date.now()}.jpg`)
+           ref.put(imagen)
+           .then( () => {
+            ref.getDownloadURL()
+            .then( url => {
+                this.props.onImageUpload(url)
+            }
+            )
+        })
+        })
+        .catch(e => console.log(e))
     }
     render(){
-        return(
-            <View> 
-            <Camera
-                //style={}
-                type= {Camera.Constants.Type.front}
-                ref={metodosDeCamara=> this.metodosDeCamara = metodosDeCamara}
-            
-               
-            />
-             <TouchableOpacity> 
-                <Text>Sacar Foto</Text>
-            </TouchableOpacity>
-            </View>
+        console.log(this.state.photo)
+        return (
+            <>
+                {this.state.permisosDeHardware ? 
+                this.state.mostrarCamara ?
+                <View style={styles.formContainer} >
+                    <Camera style={styles.camara} type={Camera.Constants.Type.front} ref={metodosCamara => this.metodosDeCamara = metodosCamara}/>
+                    <TouchableOpacity
+                        style={styles.button}
+                         onPress={() => this.sacarFotos()}
+                        >
+                        <Text style={styles.textButton}>Sacar foto</Text>
+                    </TouchableOpacity>
+                </View>
+                :
+                <View style={styles.formContainer}>
+                    <Image style={styles.camara} source={{uri: this.state.foto}} />
+                    <TouchableOpacity
+                        style={styles.button}
+                         onPress={() => this.guardarLaFotoEnStorage()}
+                        >
+                        <Text style={styles.textButton}>Aceptar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                         onPress={() => this.rechazarFoto()}
+                        >
+                        <Text style={styles.textButton}>Rechazar</Text>
+                    </TouchableOpacity>
+                </View>
+                :
+                <Text>No me diste los permisos de la camara</Text>
+                }
+            </>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    formContainer: {
+        height: `60vh`,
+        widht: `100vw`,
+    },
+    camara: {
+        widht: '100%',
+        height: '100%',
+    },
+    input: {
+      height: 20,
+      paddingVertical: 15,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: "#ccc",
+      borderStyle: "solid",
+      borderRadius: 6,
+      marginVertical: 10,
+    },
+    button: {
+      backgroundColor: "blue",
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+      textAlign: "center",
+      borderRadius: 4,
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: "#28a745",
+    },
+    textButton: {
+      color: "#fff",
+    },
+  });
+
 export default Camara;

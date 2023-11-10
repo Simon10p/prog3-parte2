@@ -17,7 +17,8 @@ class PostForm extends Component {
         db.collection('posts').add({
             owner: owner, //auth.currentUser.email,
             textoPost: textoPost, //this.state.textoPost,
-            createdAt: createdAt //Date.now(), 
+            createdAt: createdAt, //Date.now(), 
+            likes: []
         })
         .then( res => console.log(res))
         .catch( e => console.log(e))
@@ -37,7 +38,7 @@ class PostForm extends Component {
                     keyboardType='default'
                     value={this.state.textoPost}
                     />
-                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost(auth.currentUser.email, this.state.textoPost, Date.now())}>
+                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost(auth.currentUser.email, this.state.textoPost, Date.now(), this.state.likes)}>
                     <Text style={styles.textButton}>Postear</Text>    
                 </TouchableOpacity>
             </View>
