@@ -50,7 +50,7 @@ class Home extends Component {
         return(
             <View>
                 <Text>HOME</Text>
-                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
+                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('')}>
                     <Text>Your Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPressOut={()=>this.logout()}>
