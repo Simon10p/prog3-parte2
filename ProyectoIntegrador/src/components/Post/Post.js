@@ -28,7 +28,7 @@ class Post extends Component {
     likear(){
         //Agrega un email en la propiedad like del post.
         db.collection('posts').doc(this.props.dataPost.id).update({
-            likes:firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+            likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
         })
         .then( res => this.setState({
             like: true,

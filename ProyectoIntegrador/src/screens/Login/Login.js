@@ -7,28 +7,30 @@ class Login extends Component {
         super()
         this.state={
             email:'',
-            password:''
+            password:'',
+            errors: "",
         }
     }
 
-    login (email, pass){
-        auth.signInWithEmailAndPassword(email, pass)
-            .then( response => {
-                //Cuando firebase responde sin error
-                console.log('Login ok', response);
-
-                //Cambiar los estados a vacío como están al inicio.
-
-
-                //Redirigir al usuario a la home del sitio.
-                this.props.navigation.navigate('Home')
-
-            })
-            .catch( error => {
-                //Cuando Firebase responde con un error.
-                console.log(error);
-            })
+    componentDidMount(){
+        auth.onAuthStateChanged(user => {
+            if(user){
+                this.props.navigation.navigate('Login')
+            } 
+           
+        })
     }
+
+    login(email,pass){
+        auth.signInWithEmailAndPassword(email, pass)
+             .then( res => {
+                 this.props.navigation.navigate("TabNavigation")
+    })
+            .catch(error => 
+                 this.setState({
+                    errors: `El error es: ${error.message}`
+    })
+    )}
 
     render(){
         return(
