@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
 import React, { Component } from 'react'
 import { auth, db } from '../../firebase/config'
-import Posteo from '../../components/Posteo/Posteo';
+import Post from '../../components/Post/Post';
 
 class Profile extends Component {
   
@@ -34,7 +34,7 @@ class Profile extends Component {
       })
   
       db.collection('users')
-        .where('creador', '==', auth.currentUser.email)
+        .where('email', '==', auth.currentUser.email)
         .onSnapshot(doc => {
           doc.forEach(doc =>
             this.setState({
@@ -54,14 +54,15 @@ class Profile extends Component {
 
 
     render() {
+      console.log(this.state.infoUser);
       return (
         <>
           <div>
             <Text>Este es tu perfil!</Text>
             <li>
   
-              <ul><Text > Bienvenido a tu perfil {this.state.infoUser.nombreDeUsuario}! </Text></ul>
-              <ul><Text> La biografia del usuario: {this.state.infoUser.descripcion}</Text></ul>
+              <ul><Text > Bienvenido a tu perfil {this.state.infoUser.userName}! </Text></ul>
+              <ul><Text> La biografia del usuario: {this.state.infoUser.miniBio}</Text></ul>
               <ul><Text> Tu mail: {auth.currentUser.email} </Text> </ul>
               <ul><Text> Tu perfil se creo: {auth.currentUser.metadata.creationTime} </Text> </ul>
             </li>
@@ -70,9 +71,10 @@ class Profile extends Component {
           <View style={styles.container3}> <FlatList
             data={this.state.allPosts}
             keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => <Posteo navigation={this.props.navigation} data={item.data} id={item.id} />} //RENDERIZA UN COMPONENTE POST que le paso a traves de la prop data toda la info que se guarda en items (data sale del push de doc.data
+            renderItem={({ item }) => <Post navigation={this.props.navigation} dataPost={item} id={item.id} />} //RENDERIZA UN COMPONENTE POST que le paso a traves de la prop data toda la info que se guarda en items (data sale del push de doc.data
           />  </View>
           
+
   
           <TouchableOpacity onPress={() => this.signOut()}>
               <Text style={styles.boton}> Cerrar tu sesión</Text>

@@ -41,7 +41,7 @@ class Post extends Component {
 
     unlike(){
         //Quita un email en la propiedad like del post.
-        db.collection('posts').doc(this.props.dataPost.id).update({
+        db.collection('posts').doc(this.props.id).update({
             likes:firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
         })
         .then( res => this.setState({

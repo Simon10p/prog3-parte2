@@ -19,6 +19,7 @@ class Home extends Component {
         this.props.navigation.navigate('Login')
 
     }
+    
 //usamos on snapshot para traer lo que esta en firebase
 //on snapshot recibe un callback, el parametro va a tener la ifnroamcion q trajo de firebase
 // dentro de ese callback creamos una variable para ir llenando la info con lo que nos trae firebase
@@ -49,6 +50,9 @@ class Home extends Component {
         return(
             <View>
                 <Text>HOME</Text>
+                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
+                    <Text>Your Profile</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPressOut={()=>this.logout()}>
                     <Text>Logout</Text>
                 </TouchableOpacity>

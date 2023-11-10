@@ -28,7 +28,7 @@ class Register extends Component{
         } )
 
     }
-    register(email, pass, userName){
+    register(email, pass, userName, descripcion){
         auth.createUserWithEmailAndPassword(email, pass)
         .then( response => {
             //Cuando firebase responde sin error
@@ -41,6 +41,7 @@ class Register extends Component{
                 email: auth.currentUser.email,
                 userName: userName,
                 createdAt: Date.now(),
+                miniBio: descripcion
             })
 
             .then( res => console.log(res))
@@ -55,7 +56,7 @@ class Register extends Component{
      
       render(){
         return(
-<View style={styles.formContainer}>
+    <View style={styles.formContainer}>
         <Text>Register</Text>
               <TextInput
                   style={styles.input}
@@ -79,7 +80,14 @@ class Register extends Component{
                   secureTextEntry={true}
                   value={this.state.password}
               />
-              <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName)}>
+              <TextInput
+                  style={styles.input}
+                  onChangeText={(text)=>this.setState({miniBio: text})}
+                  placeholder='description'
+                  keyboardType='email-address'
+                  value={this.state.miniBio}
+              />
+              <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio)}>
                   <Text style={styles.textButton}>Registrarse</Text>    
               </TouchableOpacity>
               <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>

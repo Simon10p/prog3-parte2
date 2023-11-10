@@ -1,11 +1,11 @@
 import { Text, View, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native'
 import React, { Component } from 'react'
 import { db } from '../../firebase/config'
-import Post from '../Post/Post'
-import Posteo from '../../components/Posteo/Posteo'
+import Post from '../../components/Post/Post'
 
 
-export default class ProfileFriends extends Component {
+
+class ProfileFriends extends Component {
     constructor(props) {
         super(props)
         console.log(props)
@@ -59,7 +59,7 @@ export default class ProfileFriends extends Component {
                     <FlatList
                     data={this.state.postsFriend}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Posteo data={item.data} id={item.id} />} //RENDERIZA UN COMPONENTE POST que le paso a traves de la prop data toda la info que se guarda en items (data sale del push de doc.data
+                    renderItem={({ item }) => <Post dataPost={item.data} id={item.id} />} //RENDERIZA UN COMPONENTE POST que le paso a traves de la prop data toda la info que se guarda en items (data sale del push de doc.data
                 /> 
                     </View>
                 
@@ -84,3 +84,5 @@ const styles = StyleSheet.create({
       height:300
     }
   })
+
+export default ProfileFriends;
