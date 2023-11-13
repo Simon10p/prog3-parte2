@@ -5,7 +5,7 @@ import Post from '../../components/Post/Post'
 
 
 
-class ProfileFriends extends Component {
+class FriendProfile extends Component {
     constructor(props) {
         super(props)
         console.log(props)
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
     }
   })
 
-export default ProfileFriends;
+export default FriendProfile;

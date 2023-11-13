@@ -12,7 +12,6 @@ class Post extends Component {
           //  cantidadDeLikes: this.props.dataPost.datos.likes.length
         }
     }
-
     componentDidMount(){
         //Chequear apenas carga si el post está o no likeado
         if(this.props.dataPost.datos.likes.includes(auth.currentUser.email)){
@@ -56,57 +55,61 @@ class Post extends Component {
 
     render(){
         return (
-            <View>
-                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('FriendProfile')}> <Text>{ this.props.dataPost.datos.owner }</Text> </TouchableOpacity>
-                <Text>{ this.props.dataPost.datos.textoPost }</Text>
-                <Text>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
-                {
-                    this.state.like ?
-                        <TouchableOpacity style={styles.button} onPress={()=>this.unlike()}>
-                            <Text style={styles.textButton}>Unlike</Text>    
-                        </TouchableOpacity>
-
-                        :
-
-                        <TouchableOpacity style={styles.button} onPress={()=> this.likear()} >
-                            <Text style={styles.textButton}>Likear</Text>    
-                        </TouchableOpacity>
-                }
+            <View style={styles.postContainer}>
+            <TouchableOpacity onPressOut={() => this.props.navigation.navigate('FriendProfile',{email: this.props.dataPost.datos.owner} )}>
+              <Text style={styles.ownerText}>{this.props.dataPost.datos.owner}</Text>
+            </TouchableOpacity>
+            <Text style={styles.postText}>{this.props.dataPost.datos.textoPost}</Text>
+            <Text style={styles.likesText}>Cantidad de Likes: {this.state.cantidadDeLikes}</Text>
+            {this.state.like ? (
+              <TouchableOpacity style={styles.unlikeButton} onPress={() => this.unlike()}>
+                <Text style={styles.buttonText}>Unlike</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.likeButton} onPress={() => this.likear()}>
+                <Text style={styles.buttonText}>Likear</Text>
+              </TouchableOpacity>
+                )}
             </View>
 
         )
     }
 
 }
-
 const styles = StyleSheet.create({
-    formContainer:{
-        paddingHorizontal:10,
-        marginTop: 20,
+    postContainer: {
+      padding: 10,
+      marginBottom: 10,
+      borderWidth: 1,
+      borderColor: '#ddd',
+      borderRadius: 5,
     },
-    input:{
-        height:20,
-        paddingVertical:15,
-        paddingHorizontal: 10,
-        borderWidth:1,
-        borderColor: '#ccc',
-        borderStyle: 'solid',
-        borderRadius: 6,
-        marginVertical:10,
+    ownerText: {
+      fontWeight: 'bold',
+      marginBottom: 5,
     },
-    button:{
-        backgroundColor:'orange',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        textAlign: 'center',
-        borderRadius:4, 
-        borderWidth:1,
-        borderStyle: 'solid',
-        borderColor: 'orange'
+    postText: {
+      marginBottom: 10,
     },
-    textButton:{
-        color: '#fff'
-    }
+    likesText: {
+      marginBottom: 10,
+    },
+      likeButton: {
+        backgroundColor: 'green',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+      },
+      unlikeButton: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+      },
+      buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+      },
 })
 
 export default Post;
