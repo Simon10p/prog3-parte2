@@ -57,7 +57,7 @@ class Post extends Component {
     render(){
         return (
             <View>
-                <Text>{ this.props.dataPost.datos.owner }</Text>
+                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('FriendProfile')}> <Text>{ this.props.dataPost.datos.owner }</Text> </TouchableOpacity>
                 <Text>{ this.props.dataPost.datos.textoPost }</Text>
                 <Text>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
                 {

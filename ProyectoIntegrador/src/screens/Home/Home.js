@@ -50,7 +50,7 @@ class Home extends Component {
         return(
             <View>
                 <Text>HOME</Text>
-                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('')}>
+                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
                     <Text>Your Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPressOut={()=>this.logout()}>
@@ -62,7 +62,7 @@ class Home extends Component {
             <FlatList 
                 data = {this.state.posts}
                 keyExtractor={ unPost => unPost.id}
-                renderItem= { ({item}) => <Post dataPost = {item}    /> }
+                renderItem= { ({item}) => <Post dataPost = {item} navigation = {this.props.navigation} /> }
             />
             </View>
         )

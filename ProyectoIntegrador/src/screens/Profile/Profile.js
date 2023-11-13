@@ -15,20 +15,20 @@ class Profile extends Component {
     }
     componentDidMount() {
   
-      db.collection('post').where('owner', '==', auth.currentUser.email)
+      db.collection('posts').where('owner', '==', auth.currentUser.email)
       .orderBy('createdAt' , 'desc')
       .onSnapshot(docs => {
         let posts = []
         docs.forEach(doc => {
           posts.push({
             id: doc.id,
-            data: doc.data()
+            datos: doc.data()
           })
         })
         this.setState({
           allPosts: posts
         },
-          () => console.log(this.state.allPosts)
+        console.log("hola", this.state.allPosts)
         )
   
       })
@@ -54,32 +54,37 @@ class Profile extends Component {
 
 
     render() {
-      console.log(this.state.infoUser);
+      console.log("TEST", this.state.allPosts);
       return (
         <>
-          <div>
+        <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Home')}>
+                    <Text>Back to Home</Text>
+                </TouchableOpacity>
+          <View>
             <Text>Este es tu perfil!</Text>
-            <li>
-  
-              <ul><Text > Bienvenido a tu perfil {this.state.infoUser.userName}! </Text></ul>
-              <ul><Text> La biografia del usuario: {this.state.infoUser.miniBio}</Text></ul>
-              <ul><Text> Tu mail: {auth.currentUser.email} </Text> </ul>
-              <ul><Text> Tu perfil se creo: {auth.currentUser.metadata.creationTime} </Text> </ul>
-            </li>
             
-          </div>
-          <View style={styles.container3}> <FlatList
-            data={this.state.allPosts}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => <Post navigation={this.props.navigation} dataPost={item} id={item.id} />} //RENDERIZA UN COMPONENTE POST que le paso a traves de la prop data toda la info que se guarda en items (data sale del push de doc.data
-          />  </View>
-          
+  
+              <Text > Bienvenido a tu perfil {this.state.infoUser.userName}! </Text>
+             <Text> La biografia del usuario: {this.state.infoUser.miniBio}</Text>
+              <Text> Tu mail: {auth.currentUser.email} </Text> 
+              <Text> Tu perfil se creo: {auth.currentUser.metadata.creationTime} </Text> 
+            
+            
+          </View>
 
+          <View style={styles.container3}> 
+          <FlatList 
+                data = {this.state.allPosts}
+                keyExtractor={ unPost => unPost.id}
+                renderItem= { ({item}) => <Post dataPost = {item}    /> }
+            />
+             </View>
+          
   
           <TouchableOpacity onPress={() => this.signOut()}>
               <Text style={styles.boton}> Cerrar tu sesión</Text>
             </TouchableOpacity>
-            </>
+          </>
       )
     }
   }
