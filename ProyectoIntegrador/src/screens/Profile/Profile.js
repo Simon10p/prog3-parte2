@@ -79,7 +79,6 @@ class Profile extends Component {
                 renderItem= { ({item}) => <Post dataPost = {item}    /> }
             />
              </View>
-          
   
           <TouchableOpacity onPress={() => this.signOut()}>
               <Text style={styles.boton}> Cerrar tu sesión</Text>

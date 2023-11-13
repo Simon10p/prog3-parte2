@@ -18,39 +18,42 @@ class FriendProfile extends Component {
 
     componentDidMount() {
         db
-            .collection('post')
+            .collection('posts')
             .where('owner', '==', this.state.mailFriend)
             .onSnapshot(docs => {
                 let posts = []
                 docs.forEach(doc => posts.push({
                     id: doc.id,
-                    data: doc.data()
+                    datos: doc.data()
                 }))
                 this.setState({
                     postsFriend: posts
-                }, () => console.log(this.state.postsFriend))
+                }, () => console.log("TEST222", this.state.postsFriend))
             })
         db.collection('users')
-            .where('creador', '==', this.state.mailFriend)
+            .where('email', '==', this.state.mailFriend)
             .onSnapshot(doc => {
                 doc.forEach(doc =>
                     this.setState({
                         id: doc.id,
                         infoUser: doc.data()
                     }))
-
             })
     }
     render() {
         return (
             <>
-                <Text >{this.state.infoUser.nombreDeUsuario}'s Profile</Text>
+            <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Home')}>
+                    <Text>Back to Home</Text>
+            </TouchableOpacity>
+
+                <Text >{this.state.infoUser.userName}'s Profile</Text>
 
 
-                <Text>{this.state.infoUser.nombreDeUsuario}</Text>
+                <Text>{this.state.infoUser.userName}</Text>
                 <Text>{this.props.route.params.email}</Text>
-                <Text>{this.state.infoUser.descripcion}</Text>
-                <Text>{this.state.postsFriend.length}</Text>
+                <Text>{this.state.infoUser.miniBio}</Text>
+                <Text> Cantidad de Publicaciones: {this.state.postsFriend.length}</Text>
                 <Image 
                     source={{ uri: this.state.infoUser.imagen }}
                     resizeMode='contain' />
@@ -59,7 +62,7 @@ class FriendProfile extends Component {
                     <FlatList
                     data={this.state.postsFriend}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Post dataPost={item.data} id={item.id} />} //RENDERIZA UN COMPONENTE POST que le paso a traves de la prop data toda la info que se guarda en items (data sale del push de doc.data
+                    renderItem={({ item }) => <Post dataPost={item} navigation = {this.props.navigation} />} //RENDERIZA UN COMPONENTE POST que le paso a traves de la prop data toda la info que se guarda en items (data sale del push de doc.data
                 /> 
                     </View>
                 
