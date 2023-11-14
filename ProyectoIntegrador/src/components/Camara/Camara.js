@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { db, auth, storage } from '../../firebase/config';
 import firebase from 'firebase';
 import {Camera} from "expo-camera";
+
 
 
 class Camara extends Component{
@@ -46,7 +47,7 @@ class Camara extends Component{
 
     rechazarFoto(){
         this.setState({
-            showCamera: true,
+            mostrarCamara: true,
         })
     }
 
@@ -67,9 +68,9 @@ class Camara extends Component{
         .catch(e => console.log(e))
     }
     render(){
-        console.log(this.state.photo)
+        console.log(this.state.urlInternaFoto)
         return (
-            <>
+            <View>
                 {this.state.permisosDeHardware ? 
                 this.state.mostrarCamara ?
                 <View style={styles.formContainer} >
@@ -83,7 +84,7 @@ class Camara extends Component{
                 </View>
                 :
                 <View style={styles.formContainer}>
-                    <Image style={styles.camara} source={{uri: this.state.foto}} />
+                    <Image style={styles.camara} source={{uri: this.state. urlInternaFoto}} />
                     <TouchableOpacity
                         style={styles.button}
                          onPress={() => this.guardarLaFotoEnStorage()}
@@ -98,9 +99,9 @@ class Camara extends Component{
                     </TouchableOpacity>
                 </View>
                 :
-                <Text>No me diste los permisos de la camara</Text>
+                <Text>Para sacar fotos, se necesita acceso a tu camara</Text>
                 }
-            </>
+            </View>
         )
     }
 }
@@ -108,11 +109,11 @@ class Camara extends Component{
 const styles = StyleSheet.create({
     formContainer: {
         height: `60vh`,
-        widht: `100vw`,
+        width: `100vw`,
     },
     camara: {
-        widht: '100%',
-        height: '100%',
+        width: '50%',
+        height: '50%',
     },
     input: {
       height: 20,

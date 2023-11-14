@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import Camara from '../../components/Camara/Camara';
@@ -8,6 +8,7 @@ class PostForm extends Component {
         super()
         this.state={
            textoPost:'',
+           url: ""
         }
     }
 
@@ -18,18 +19,23 @@ class PostForm extends Component {
             owner: owner, //auth.currentUser.email,
             textoPost: textoPost, //this.state.textoPost,
             createdAt: createdAt, //Date.now(), 
+            foto: this.state.url,
             likes: []
         })
         .then( res => console.log(res))
         .catch( e => console.log(e))
     }
 
+    onImageUpload(url){
+        this.setState({ url: url });
+      }
+
 
     render(){
         return(
             <View style={styles.formContainer}>
                 <Text>Aca esta la camara</Text>
-                <Camara/>
+                <Camara onImageUpload={(url) => this.onImageUpload(url)}/>
                 <Text>New Post</Text>
                 <TextInput
                     style={styles.input}

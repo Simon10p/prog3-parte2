@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
 
@@ -59,6 +59,7 @@ class Post extends Component {
             <TouchableOpacity onPressOut={() => this.props.navigation.navigate('FriendProfile',{email: this.props.dataPost.datos.owner} )}>
               <Text style={styles.ownerText}>{this.props.dataPost.datos.owner}</Text>
             </TouchableOpacity>
+            <Image style={styles.camara} source={{uri: this.props.dataPost.datos.foto}} />
             <Text style={styles.postText}>{this.props.dataPost.datos.textoPost}</Text>
             <Text style={styles.likesText}>Cantidad de Likes: {this.state.cantidadDeLikes}</Text>
             {this.state.like ? (
@@ -84,6 +85,10 @@ const styles = StyleSheet.create({
       borderColor: '#ddd',
       borderRadius: 5,
     },
+    camara: {
+      width: '50%',
+      height: '100%',
+  },
     ownerText: {
       fontWeight: 'bold',
       marginBottom: 5,

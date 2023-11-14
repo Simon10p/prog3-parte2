@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import {TextInput, FlatList ,TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import { auth, db } from '../../firebase/config';
 import PostForm from '../PostForm/PostForm';
