@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, FlatList} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
 
@@ -9,7 +9,8 @@ class Post extends Component {
         super(props);
         this.state = {
             like: false,
-          //  cantidadDeLikes: this.props.dataPost.datos.likes.length
+            comentario: "",
+          cantidadDeLikes: this.props.dataPost.datos.likes.length
         }
     }
     componentDidMount(){
@@ -52,6 +53,19 @@ class Post extends Component {
         .catch( e => console.log(e))
     }
 
+    comentar(texto){
+      const postId = this.props.dataPost.id;
+
+      db.collection("posts").doc(postId).update({
+        comentarios: firebase.firestore.FieldValue.arrayUnion(texto)
+      })
+      .then(() => {
+       
+        this.setState({ comentario: "" });
+      })
+      .catch(e => console.log(e));
+      }
+
 
     render(){
         return (
@@ -62,6 +76,7 @@ class Post extends Component {
             <Image style={styles.camara} source={{uri: this.props.dataPost.datos.foto}} />
             <Text style={styles.postText}>{this.props.dataPost.datos.textoPost}</Text>
             <Text style={styles.likesText}>Cantidad de Likes: {this.state.cantidadDeLikes}</Text>
+            
             {this.state.like ? (
               <TouchableOpacity style={styles.unlikeButton} onPress={() => this.unlike()}>
                 <Text style={styles.buttonText}>Unlike</Text>
@@ -71,6 +86,28 @@ class Post extends Component {
                 <Text style={styles.buttonText}>Likear</Text>
               </TouchableOpacity>
                 )}
+
+                <TouchableOpacity
+                    onPress={ ()=> this.props.navigation.navigate('Comentarios', this.props.dataPost.datos.owner)}>
+                        <Text> {this.props.dataPost.datos.comments.length} comentarios </Text>
+                     
+                </TouchableOpacity>
+
+                <View>
+                <TextInput
+                       
+                        onChangeText={(text) => this.setState({comentario: text })}
+                        placeholder="Comment..."
+                        keyboardType="default"
+                        value={this.state.comentario}
+                    />
+                </View>   
+                <View>
+                <TouchableOpacity onPress={()=>this.comentar(this.state.comentario)}>
+                    <Text>Comentar</Text>
+                </TouchableOpacity> 
+
+                </View>   
             </View>
 
         )

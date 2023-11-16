@@ -16,7 +16,7 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet,FlatList} from 'rea
   
     componentDidMount(){
       db
-      .collection('post')
+      .collection('posts')
       .doc(this.props.route.params.id)
       .onSnapshot(doc => {
         this.setState({
@@ -28,7 +28,7 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet,FlatList} from 'rea
   
     addComment(idDoc, text){
       db
-      .collection('post')
+      .collection('posts')
       .doc(idDoc)
       .update({
         comments: firebase.firestore.FieldValue.arrayUnion({

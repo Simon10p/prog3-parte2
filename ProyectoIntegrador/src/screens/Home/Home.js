@@ -58,7 +58,8 @@ class Home extends Component {
                 </TouchableOpacity>
 
             {/* importar form para crear post, el form deberia estar en una pantalla aparte para que no este todo raro */}
-            {/* <PostForm /> */}
+            <PostForm /> 
+            
             <FlatList 
                 data = {this.state.posts}
                 keyExtractor={ unPost => unPost.id}
