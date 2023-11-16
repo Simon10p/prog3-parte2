@@ -57,7 +57,7 @@ class Register extends Component{
       render(){
         return(
     <View style={styles.formContainer}>
-        <Text>Register</Text>
+        <Text style={styles.title}>Registrate</Text>
               <TextInput
                   style={styles.input}
                   onChangeText={(text)=>this.setState({email: text})}
@@ -91,7 +91,7 @@ class Register extends Component{
                   <Text style={styles.textButton}>Registrarse</Text>    
               </TouchableOpacity>
               <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
-                 <Text>Ya tengo cuenta. Ir al login</Text>
+                 <Text style={styles.registerLink}>Ya tengo cuenta. Ir al login</Text>
               </TouchableOpacity>
       </View> 
         )  
@@ -99,34 +99,43 @@ class Register extends Component{
 }
 
 const styles = StyleSheet.create({
-  formContainer:{
-      paddingHorizontal:10,
+    formContainer: {
+      paddingHorizontal: 10,
       marginTop: 20,
-  },
-  input:{
-      height:20,
-      paddingVertical:15,
-      paddingHorizontal: 10,
-      borderWidth:1,
-      borderColor: '#ccc',
-      borderStyle: 'solid',
-      borderRadius: 6,
-      marginVertical:10,
-  },
-  button:{
-      backgroundColor:'#28a745',
-      paddingHorizontal: 10,
-      paddingVertical: 6,
-      textAlign: 'center',
-      borderRadius:4, 
-      borderWidth:1,
-      borderStyle: 'solid',
-      borderColor: '#28a745'
-  },
-  textButton:{
-      color: '#fff'
-  }
-
-})
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      color: 'blue',
+     
+    },
+    input: {
+        height: 40,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 6,
+        marginVertical: 10,
+      },
+      button: {
+        backgroundColor: 'blue',
+        padding: 12,
+        borderRadius: 6,
+        alignItems: 'center',
+      },
+      textButton: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      registerLink: {
+        marginTop: 10,
+        textAlign: 'center',
+        color: 'blue',
+        fontSize: 16,
+      },
+    });
 
 export default Register;

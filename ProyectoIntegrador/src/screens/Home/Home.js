@@ -48,17 +48,17 @@ class Home extends Component {
     render(){
         console.log(this.state.posts)
         return(
-            <View>
-                <Text>HOME</Text>
+            <View style={styles.container}>
+                <Text style={styles.title} >HOME</Text>
                 <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
-                    <Text>Your Profile</Text>
+                    <Text style={styles.profileLink} > Mi Perfil</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPressOut={()=>this.logout()}>
-                    <Text>Logout</Text>
+                    <Text style={styles.logoutLink} >Cerrar sesión</Text>
                 </TouchableOpacity>
 
             {/* importar form para crear post, el form deberia estar en una pantalla aparte para que no este todo raro */}
-            <PostForm />
+            {/* <PostForm /> */}
             <FlatList 
                 data = {this.state.posts}
                 keyExtractor={ unPost => unPost.id}
@@ -69,6 +69,31 @@ class Home extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: 20,
+      paddingTop: 20,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      color: 'blue',
+     
+    },
+    profileLink: {
+      fontSize: 16,
+      color: 'blue',
+      marginTop: 10,
+     
+    },
+    logoutLink: {
+        fontSize: 16,
+        color: 'blue',
+        marginTop: 10,
+      },
+    });
 
 
 export default Home;

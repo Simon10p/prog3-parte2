@@ -52,67 +52,86 @@ class Profile extends Component {
       this.props.navigation.navigate('Login')
     }
 
-
     render() {
-      console.log("TEST", this.state.allPosts);
       return (
-        <>
-        <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Home')}>
-                    <Text>Back to Home</Text>
-                </TouchableOpacity>
-          <View>
-            <Text>Este es tu perfil!</Text>
-            
+        <View style={styles.container}>
+          <TouchableOpacity onPressOut={() => this.props.navigation.navigate('Home')}>
+            <Text style={styles.backButton}>Back to Home</Text>
+          </TouchableOpacity>
   
-              <Text > Bienvenido a tu perfil {this.state.infoUser.userName}! </Text>
-             <Text> La biografia del usuario: {this.state.infoUser.miniBio}</Text>
-              <Text> Tu mail: {auth.currentUser.email} </Text> 
-              <Text> Tu perfil se creo: {auth.currentUser.metadata.creationTime} </Text> 
-            
-            
+          <View style={styles.profileInfo}>
+            <Text style={styles.welcomeText}>Bienvenido a tu perfil, {this.state.infoUser.userName}!</Text>
+            <Text style={styles.bioText}>Biografía del usuario: {this.state.infoUser.miniBio}</Text>
+            <Text style={styles.emailText}>Tu email: {auth.currentUser.email}</Text>
+            <Text style={styles.creationTimeText}>Tu perfil se creó: {auth.currentUser.metadata.creationTime}</Text>
           </View>
 
-          <View style={styles.container3}> 
-          <FlatList 
-                data = {this.state.allPosts}
-                keyExtractor={ unPost => unPost.id}
-                renderItem= { ({item}) => <Post dataPost = {item}    /> }
-            />
-             </View>
-  
-          <TouchableOpacity onPress={() => this.signOut()}>
-              <Text style={styles.boton}> Cerrar tu sesión</Text>
-            </TouchableOpacity>
-          </>
-      )
-    }
-  }
 
+
+        <View style={styles.postContainer}>
+          <FlatList
+            data={this.state.allPosts}
+            keyExtractor={(unPost) => unPost.id}
+            renderItem={({ item }) => <Post dataPost={item} />}
+          />
+        </View>
+
+        <TouchableOpacity onPress={() => this.signOut()} style={styles.logoutButton}>
+          <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+ 
   const styles = StyleSheet.create({
-    container1:{
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center'
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: '#fff',
     },
-    container2:{
-      flex:3
-    },
-    container3:{
-      flex:5
-    },
-    image:{
-      height:300
-    },
-    boton:{
-      fontFamily: 'monospace',
-      fontSize: 16,
-      margin: 15,
-      backgroundColor: 'rgb(186, 0, 0)',
-      borderRadius: 20,
-      textAlign: 'center',
-      padding: 5
-  
+  backButton: {
+    fontSize: 16,
+    color: 'blue',
+    marginBottom: 20,
   },
-  })
+  profileInfo: {
+    marginBottom: 20,
+  },
+  welcomeText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  bioText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  emailText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  creationTimeText: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  postContainer: {
+    flex: 1,
+  },
+  logoutButton: {
+    backgroundColor: 'blue',
+    padding: 12,
+    borderRadius: 6,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
+
   export default Profile
   
