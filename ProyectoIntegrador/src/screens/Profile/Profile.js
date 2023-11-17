@@ -72,7 +72,7 @@ class Profile extends Component {
           <FlatList
             data={this.state.allPosts}
             keyExtractor={(unPost) => unPost.id}
-            renderItem={({ item }) => <Post dataPost={item} />}
+            renderItem={({ item }) => <Post dataPost={item} navigation = {this.props.navigation}/>}
           />
         </View>
 

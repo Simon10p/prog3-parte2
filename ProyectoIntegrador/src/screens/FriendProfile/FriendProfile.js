@@ -1,6 +1,6 @@
 import { Text, View, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native'
 import React, { Component } from 'react'
-import { db } from '../../firebase/config'
+import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post'
 
 
@@ -42,21 +42,21 @@ class FriendProfile extends Component {
     }
     render() {
         return (
-            <>
+            <View styles={styles.container}>
             <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Home')}>
-                    <Text>Back to Home</Text>
+                    <Text style={styles.backButton}>Back to Home</Text>
             </TouchableOpacity>
-
-                <Text >{this.state.infoUser.userName}'s Profile</Text>
-
-
-                <Text>{this.state.infoUser.userName}</Text>
-                <Text>{this.props.route.params.email}</Text>
-                <Text>{this.state.infoUser.miniBio}</Text>
-                <Text> Cantidad de Publicaciones: {this.state.postsFriend.length}</Text>
+                <View style={styles.profileInfo}> 
+                <Text style={styles.welcomeText}>{this.state.infoUser.userName}'s Profile</Text>
+                <Text style={styles.emailText}>{this.props.route.params.email}</Text>
+                <Text style={styles.bioText}>{this.state.infoUser.miniBio}</Text>
+                <Text style={styles.creationTimeText}>Este perfil fue creado {auth.currentUser.metadata.creationTime} </Text>
+                <Text style={styles.creationTimeText}>Cantidad de Publicaciones: {this.state.postsFriend.length} </Text>
                 <Image 
                     source={{ uri: this.state.infoUser.imagen }}
                     resizeMode='contain' />
+
+                </View>
                     <View style={styles.container3}>
 
                     <FlatList
@@ -66,26 +66,57 @@ class FriendProfile extends Component {
                 /> 
                     </View>
                 
-                    </>
+                    </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container1:{
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center'
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: '#fff',
     },
-    container2:{
-      flex:3
-    },
-    container3:{
-      flex:5
-    },
-    image:{
-      height:300
-    }
-  })
+  backButton: {
+    fontSize: 16,
+    color: 'blue',
+    marginBottom: 20,
+  },
+  profileInfo: {
+    marginBottom: 20,
+  },
+  welcomeText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  bioText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  emailText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  creationTimeText: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  postContainer: {
+    flex: 1,
+  },
+  logoutButton: {
+    backgroundColor: 'blue',
+    padding: 12,
+    borderRadius: 6,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
 export default FriendProfile;

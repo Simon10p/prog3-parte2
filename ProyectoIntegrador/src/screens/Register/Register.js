@@ -2,6 +2,7 @@ import {db, auth } from '../../firebase/config';
 import React, {Component} from "react";
 import {View, Text, TouchableOpacity, StyleSheet, TextInput} from "react-native";
 
+let pp = ''
 class Register extends Component{
     constructor(props){
         super(props);
@@ -41,7 +42,8 @@ class Register extends Component{
                 email: auth.currentUser.email,
                 userName: userName,
                 createdAt: Date.now(),
-                miniBio: descripcion
+                miniBio: descripcion,
+                fotoPerfil: ""
             })
 
             .then( res => console.log(res))

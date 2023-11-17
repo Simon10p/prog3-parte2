@@ -3,6 +3,7 @@ import {TextInput, FlatList ,TouchableOpacity, View, Text, StyleSheet} from 'rea
 import { auth, db } from '../../firebase/config';
 import PostForm from '../PostForm/PostForm';
 import Post from '../../components/Post/Post';
+import Buscador from '../Buscador/Buscador'
 
 
 class Home extends Component {
@@ -46,13 +47,16 @@ class Home extends Component {
 
 
     render(){
+    
         console.log(this.state.posts)
         return(
+
             <View style={styles.container}>
                 <Text style={styles.title} >HOME</Text>
                 <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
                     <Text style={styles.profileLink} > Mi Perfil</Text>
                 </TouchableOpacity>
+                <Buscador navigation={this.props.navigation}/>
                 <TouchableOpacity onPressOut={()=>this.logout()}>
                     <Text style={styles.logoutLink} >Cerrar sesión</Text>
                 </TouchableOpacity>

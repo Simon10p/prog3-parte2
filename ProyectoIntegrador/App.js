@@ -9,6 +9,7 @@ import Profile from './src/screens/Profile/Profile';
 import FriendProfile from './src/screens/FriendProfile/FriendProfile'
 import Menu from './src/components/Menu/Menu';
 import Comentarios from './src/screens/Comentarios/Comentarios'
+import Buscador from './src/screens/Buscador/Buscador'
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function App() {
           <Stack.Screen name='Profile' component={Profile} options={ { headerShown: false } }/>
           <Stack.Screen name='FriendProfile' component={FriendProfile} options={ { headerShown: false } }/>
           <Stack.Screen name='Comentarios' component={Comentarios} options={ { headerShown: false } }/>
+          <Stack.Screen name='Buscador' component={Buscador} options={ { headerShown: false } }/>
         </Stack.Navigator>
       </NavigationContainer>
 

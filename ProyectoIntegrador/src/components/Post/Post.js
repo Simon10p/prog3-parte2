@@ -70,9 +70,11 @@ class Post extends Component {
     render(){
         return (
             <View style={styles.postContainer}>
+            <View>
             <TouchableOpacity onPressOut={() => this.props.navigation.navigate('FriendProfile',{email: this.props.dataPost.datos.owner} )}>
               <Text style={styles.ownerText}>{this.props.dataPost.datos.owner}</Text>
             </TouchableOpacity>
+            </View>
             <Image style={styles.camara} source={{uri: this.props.dataPost.datos.foto}} />
             <Text style={styles.postText}>{this.props.dataPost.datos.textoPost}</Text>
             <Text style={styles.likesText}>Cantidad de Likes: {this.state.cantidadDeLikes}</Text>
