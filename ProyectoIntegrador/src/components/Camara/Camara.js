@@ -6,6 +6,7 @@ import {Camera} from "expo-camera";
 
 
 
+
 class Camara extends Component{
     constructor(props){
         super(props);
@@ -139,5 +140,5 @@ const styles = StyleSheet.create({
       color: "#fff",
     },
   });
-
+  
 export default Camara;
