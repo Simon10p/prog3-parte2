@@ -1,6 +1,7 @@
 import {db, auth } from '../../firebase/config';
 import React, {Component} from "react";
 import {View, Text, TouchableOpacity, StyleSheet, TextInput} from "react-native";
+import Camara from "../../components/Camara/Camara"
 
 let pp = ''
 class Register extends Component{
@@ -12,7 +13,9 @@ class Register extends Component{
             userName: '',
             password: '',
             miniBio: '',
-            fotoPerfil: ''
+            fotoPerfil: '',
+            errors: "",
+            camaraState: false
         }
     }
     componentDidMount(){
@@ -29,7 +32,15 @@ class Register extends Component{
         } )
 
     }
-    register(email, pass, userName, descripcion){
+    register(email, pass, userName, descripcion, fotoPerfil){
+  /* ERRORES */
+            if(this.state.email == '' || this.state.email.includes("@") == false){
+            return this.setState({errors: "Porfavor ingresa una direccion de correo valida"})
+            }else if (this.state.password == '' || this.state.password.length <6){
+            return this.setState({errors: "Por favor ingresa una contraseña de al menos 6 caracteres"})
+            }else if (this.state.userName == '') {
+            return this.setState({errors:'Por favor ingrese un nombre de usuario valido'})
+            }
         auth.createUserWithEmailAndPassword(email, pass)
         .then( response => {
             //Cuando firebase responde sin error
@@ -43,7 +54,7 @@ class Register extends Component{
                 userName: userName,
                 createdAt: Date.now(),
                 miniBio: descripcion,
-                fotoPerfil: ""
+                fotoPerfil: fotoPerfil
             })
 
             .then( res => console.log(res))
@@ -51,33 +62,47 @@ class Register extends Component{
         })
         .catch( error => {
             //Cuando Firebase responde con un error
+            this.setState({
+                errors: error.message
+            })
             console.log(error);
 
         })
 }
+
+    onImageUpload(url){
+        this.setState({fotoPerfil: url, camaraState: false})
+    }
      
       render(){
         return(
+            <>
+            {this.state.camaraState
+            ?
+            <Camara onImageUpload={(url) => this.onImageUpload(url)} />    
+        :
+        <>      
+
     <View style={styles.formContainer}>
         <Text style={styles.title}>Registrate</Text>
               <TextInput
                   style={styles.input}
                   onChangeText={(text)=>this.setState({email: text})}
-                  placeholder='email'
+                  placeholder='email*'
                   keyboardType='email-address'
                   value={this.state.email}
                   />
               <TextInput
                   style={styles.input}
                   onChangeText={(text)=>this.setState({userName: text})}
-                  placeholder='user name'
+                  placeholder='nombre de usuario*'
                   keyboardType='default'
                   value={this.state.userName}
                   />
               <TextInput
                   style={styles.input}
                   onChangeText={(text)=>this.setState({password: text})}
-                  placeholder='password'
+                  placeholder='contraseña*'
                   keyboardType='email-address'
                   secureTextEntry={true}
                   value={this.state.password}
@@ -85,17 +110,43 @@ class Register extends Component{
               <TextInput
                   style={styles.input}
                   onChangeText={(text)=>this.setState({miniBio: text})}
-                  placeholder='description'
+                  placeholder='descripcion'
                   keyboardType='email-address'
                   value={this.state.miniBio}
               />
-              <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio)}>
-                  <Text style={styles.textButton}>Registrarse</Text>    
-              </TouchableOpacity>
+
+            <TextInput
+                  style={styles.input}
+                  onChangeText={(url)=>this.setState({fotoPerfil: url})}
+                  placeholder='Agrega el URL de tu foto'
+                  keyboardType='email-address'
+                  value={this.state.fotoPerfil}
+              />
+
+              {
+                this.state.email.length > 0 && this.state.password.length > 0 && this.state.userName.length > 0 ? 
+                //agregar aca el register que siempre estaba hecho porque no hay errores
+                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.fotoPerfil)}>
+                <Text style={styles.textButton}>Registrarse</Text>    
+                </TouchableOpacity> : 
+                <TouchableOpacity  onPress={()=> this.setState({errors: 'Por favor rellene los campos obligatorios'})}>  
+                </TouchableOpacity>
+                }
+
+                {
+                    this.state.errors.length > 0 ? 
+                    <Text> {this.state.errors} </Text>
+                    :
+                    false
+                }
+              
               <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
-                 <Text style={styles.registerLink}>Ya tengo cuenta. Ir al login</Text>
+                 <Text style={styles.registerLink}>Ya tengo cuenta. Ingresa aquí</Text>
               </TouchableOpacity>
       </View> 
+      </>
+        }
+          </>
         )  
     }
 }
@@ -138,6 +189,22 @@ const styles = StyleSheet.create({
         color: 'blue',
         fontSize: 16,
       },
+      containerErrors:{
+        borderWidth: 1,
+        borderColor: 'red',
+        backgroundColor: 'rgba(255, 0, 0, 0.1)', // Fondo ligeramente rojo
+        padding: 10,
+        borderRadius: 6,
+        marginTop: 10,
+    },
+
+    errorsMessage:{
+        color: 'red',
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+    }
     });
+
 
 export default Register;
