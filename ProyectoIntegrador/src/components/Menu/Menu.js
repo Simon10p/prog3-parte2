@@ -1,5 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { Component } from "react";
+import { StyleSheet } from "react-native";
+
+import Octicons from '@expo/vector-icons/Octicons'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
+import Entypo from '@expo/vector-icons/Entypo'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 
 import Home from "../../screens/Home/Home";
@@ -54,5 +60,31 @@ class Menu extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: 'blue',
+   
+  },
+  profileLink: {
+    fontSize: 16,
+    color: 'blue',
+    marginTop: 10,
+   
+  },
+  logoutLink: {
+      fontSize: 16,
+      color: 'blue',
+      marginTop: 10,
+    },
+  });
 
 export default Menu;

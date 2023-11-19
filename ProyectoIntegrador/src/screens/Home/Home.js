@@ -51,18 +51,17 @@ class Home extends Component {
         console.log(this.state.posts)
         return(
 
-            <View style={styles.container}>
-                <Text style={styles.title} >HOME</Text>
+             <View style={styles.container}>
+               { /* <Text style={styles.title} >HOME</Text>
                 <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
                     <Text style={styles.profileLink} > Mi Perfil</Text>
                 </TouchableOpacity>
-                <Buscador navigation={this.props.navigation}/>
                 <TouchableOpacity onPressOut={()=>this.logout()}>
                     <Text style={styles.logoutLink} >Cerrar sesión</Text>
                 </TouchableOpacity>
+        <Buscador navigation={this.props.navigation}/> */}
+                
 
-            {/* importar form para crear post, el form deberia estar en una pantalla aparte para que no este todo raro */}
-            <PostForm /> 
             
             <FlatList 
                 data = {this.state.posts}
