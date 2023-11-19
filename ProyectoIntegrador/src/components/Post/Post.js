@@ -89,26 +89,12 @@ class Post extends Component {
               </TouchableOpacity>
                 )}
 
-                <TouchableOpacity
-                    onPress={ ()=> this.props.navigation.navigate('Comentarios', this.props.dataPost.datos.owner)}>
-                        <Text> {this.props.dataPost.datos.comments.length} comentarios </Text>
+                <Text> {this.props.dataPost.datos.comments.length} comentarios </Text>
                      
-                </TouchableOpacity>
-
                 <View>
-                <TextInput
-                       
-                        onChangeText={(text) => this.setState({comentario: text })}
-                        placeholder="Comment..."
-                        keyboardType="default"
-                        value={this.state.comentario}
-                    />
-                </View>   
-                <View>
-                <TouchableOpacity onPress={()=>this.comentar(this.state.comentario)}>
-                    <Text>Comentar</Text>
-                </TouchableOpacity> 
-
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentarios", this.props.dataPost.datos.foto)} >
+                <Text> Comentar</Text>   
+                    </TouchableOpacity>
                 </View>   
             </View>
 

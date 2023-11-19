@@ -71,21 +71,27 @@ class Camara extends Component{
     render(){
         console.log(this.state.urlInternaFoto)
         return (
-            <View>
+            <>
+           
                 {this.state.permisosDeHardware ? 
                 this.state.mostrarCamara ?
                 <View style={styles.formContainer} >
                     <Camera style={styles.camara} type={Camera.Constants.Type.front} ref={metodosCamara => this.metodosDeCamara = metodosCamara}/>
+                    <View style ={styles.containerButton}>
                     <TouchableOpacity
                         style={styles.button}
                          onPress={() => this.sacarFotos()}
                         >
                         <Text style={styles.textButton}>Sacar foto</Text>
                     </TouchableOpacity>
+                     </View>
                 </View>
                 :
+
+                <>
+                <Image style={styles.camara} source={{uri: this.state. urlInternaFoto}} />
                 <View style={styles.formContainer}>
-                    <Image style={styles.camara} source={{uri: this.state. urlInternaFoto}} />
+                    
                     <TouchableOpacity
                         style={styles.button}
                          onPress={() => this.guardarLaFotoEnStorage()}
@@ -99,10 +105,11 @@ class Camara extends Component{
                         <Text style={styles.textButton}>Rechazar</Text>
                     </TouchableOpacity>
                 </View>
+                </>
                 :
                 <Text>Para sacar fotos, se necesita acceso a tu camara</Text>
                 }
-            </View>
+            </>
         )
     }
 }

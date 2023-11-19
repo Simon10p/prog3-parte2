@@ -10,15 +10,15 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet,FlatList} from 'rea
       this.state = {
         newComment:'',
         id:'',
-        data:{}
+        data:[]
       }
     }
   
     componentDidMount(){
       db
-      .collection('posts')
-      .doc(this.props.route.params.id)
-      .onSnapshot(doc => {
+      .collection('posts').where("foto", "==", this.props.route.params)
+      .onSnapshot(datos => {
+        let info = []
         this.setState({
           id: doc.id,
           data: doc.data(),

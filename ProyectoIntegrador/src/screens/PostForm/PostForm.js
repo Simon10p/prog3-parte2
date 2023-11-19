@@ -8,10 +8,31 @@ class PostForm extends Component {
         super()
         this.state={
            textoPost:'',
-           url: ""
+           mostrarCamara:true,
+           url: "",
+           infoUser: ''
         }
     }
 
+
+    componentDidMount(){
+        db.collection('users').where("email", "==", auth.currentUser.email).onSnapshot(
+          docs => {
+            let datos = []
+            docs.forEach(doc => {
+                datos.push(
+                {
+                  id: doc.id,
+                  datos: doc.data()
+                })
+            })
+    
+            this.setState({
+              infoUser: datos
+        }, ()=> console.log(this.state.infoUser))
+          }
+        )
+      }
     //1)Completar la creación de posts
     crearPost(owner, textoPost, createdAt){
         //Crear la colección Users
@@ -23,21 +44,24 @@ class PostForm extends Component {
             comments: [],
             likes: []
         })
-        .then( res => console.log(res))
+        .then( () => this.props.navigation.navigate("Home"))
         .catch( e => console.log(e))
     }
 
     onImageUpload(url){
-        this.setState({ url: url });
+        this.setState({ url: url , mostrarCamara: false});
       }
 
 
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Aca esta la camara</Text>
+                <Text>Haz un Posteo!</Text>
+                {this.state.mostrarCamara ?
+                
                 <Camara onImageUpload={(url) => this.onImageUpload(url)}/>
-                <Text>New Post</Text>
+                :
+                <React.Fragment>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({textoPost: text})}
@@ -45,11 +69,18 @@ class PostForm extends Component {
                     keyboardType='default'
                     value={this.state.textoPost}
                     />
-                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost(auth.currentUser.email, this.state.textoPost, Date.now(), this.state.likes)}>
+                <TouchableOpacity 
+                style={styles.button} 
+                onPress={()=>{
+                    this.crearPost(auth.currentUser.email, this.state.textoPost, Date.now(), this.state.likes)
+                    this.props.navigation.navigate('Home')
+                    }}>
                     <Text style={styles.textButton}>Postear</Text>    
                 </TouchableOpacity>
+                </React.Fragment>
+            }
             </View>
-        )
+        );
     }
 }
 
