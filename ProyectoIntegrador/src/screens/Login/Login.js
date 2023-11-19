@@ -15,7 +15,7 @@ class Login extends Component {
     componentDidMount(){
         auth.onAuthStateChanged((user) => {
             if(user){
-                this.props.navigation.navigate('Login')
+                this.props.navigation.navigate('Menu')
             } 
             this.setState({
                 logState: true
@@ -26,7 +26,7 @@ class Login extends Component {
     login(email,pass){
         auth.signInWithEmailAndPassword(email, pass)
              .then( res => {
-                 this.props.navigation.navigate("Home")
+                 this.props.navigation.navigate("Menu")
     })
     .catch((error) => {
         if (error.code == 'auth/internal-error'){

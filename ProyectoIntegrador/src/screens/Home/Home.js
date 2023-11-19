@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {TextInput, FlatList ,TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {ActivityIndicator, Image, TextInput, FlatList ,TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import { auth, db } from '../../firebase/config';
+
 import PostForm from '../PostForm/PostForm';
 import Post from '../../components/Post/Post';
 import Buscador from '../Buscador/Buscador'
@@ -26,7 +27,7 @@ class Home extends Component {
 // dentro de ese callback creamos una variable para ir llenando la info con lo que nos trae firebase
 //la info que nos trae firebase es un array con muchas cosas de las cuales solo queremos algunas
     componentDidMount(){
-        db.collection("posts").onSnapshot(
+        db.collection("posts").orderBy("createdAt" , "desc").onSnapshot(
             listaPosts => {
              let postAMostrar = [];
              listaPosts.forEach(unPost => {
@@ -38,36 +39,30 @@ class Home extends Component {
              this.setState({
                 posts:postAMostrar
              })
-
-
             }
         )
     }
 
 
 
-    render(){
-    
+    render(){ 
         console.log(this.state.posts)
         return(
-
              <View style={styles.container}>
-               { /* <Text style={styles.title} >HOME</Text>
-                <TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
-                    <Text style={styles.profileLink} > Mi Perfil</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPressOut={()=>this.logout()}>
-                    <Text style={styles.logoutLink} >Cerrar sesión</Text>
-                </TouchableOpacity>
-        <Buscador navigation={this.props.navigation}/> */}
-                
-
-            
+                {
+                    this.state.posts.length === 0 ?
+                    <View style={styles.activityIndicatorContainer}>
+                      <ActivityIndicator  size='small' color='blue' />
+                    </View>
+                    : 
+        <>
             <FlatList 
                 data = {this.state.posts}
                 keyExtractor={ unPost => unPost.id}
                 renderItem= { ({item}) => <Post dataPost = {item} navigation = {this.props.navigation} /> }
             />
+        </>
+                }
             </View>
         )
     }
@@ -101,3 +96,12 @@ const styles = StyleSheet.create({
 
 
 export default Home;
+
+{ /* <Text style={styles.title} >HOME</Text>
+<TouchableOpacity onPressOut={()=>this.props.navigation.navigate('Profile')}>
+    <Text style={styles.profileLink} > Mi Perfil</Text>
+</TouchableOpacity>
+<TouchableOpacity onPressOut={()=>this.logout()}>
+    <Text style={styles.logoutLink} >Cerrar sesión</Text>
+</TouchableOpacity>
+<Buscador navigation={this.props.navigation}/> */}
