@@ -118,30 +118,26 @@ const styles = StyleSheet.create({
     formContainer: {
         height: `60vh`,
         width: `100vw`,
+        alignItems: 'left', // Center items vertically
+        marginBottom: 1,
     },
     camara: {
         width: '50%',
         height: '50%',
     },
-    input: {
-      height: 20,
-      paddingVertical: 15,
-      paddingHorizontal: 10,
-      borderWidth: 1,
-      borderColor: "#ccc",
-      borderStyle: "solid",
-      borderRadius: 6,
-      marginVertical: 10,
+    containerButton: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center', // Center items vertically
+      
+     
     },
     button: {
-      backgroundColor: "blue",
-      paddingHorizontal: 10,
-      paddingVertical: 6,
-      textAlign: "center",
-      borderRadius: 4,
-      borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: "#28a745",
+        marginTop: 10,
+        backgroundColor: 'blue',
+        padding: 8,
+        borderRadius: 5,
+        marginLeft:45       
     },
     textButton: {
       color: "#fff",
