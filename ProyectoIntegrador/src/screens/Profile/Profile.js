@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image, ScrollView } from 'react-native';
+import {TextInput ,View, Text, TouchableOpacity, StyleSheet, FlatList, Image, ScrollView, Touchable } from 'react-native';
 import React, { Component } from 'react'
 import { auth, db } from '../../firebase/config'
 import Post from '../../components/Post/Post';
@@ -10,7 +10,12 @@ class Profile extends Component {
       this.state = {
         allPosts: [],
         infoUser: [],
-        id: ''
+        id: '',
+        stateEdit: false,
+        miniBio: '',
+        fotoPerfil: '',
+        userName: '',
+
       }
     }
     componentDidMount() {
@@ -65,6 +70,26 @@ class Profile extends Component {
           console.log(error);
         })
     }
+   
+
+    editProfile(){
+      
+        db.collection("users").doc(this.state.id).update({
+          userName: this.state.userName,
+          miniBio: this.state.miniBio,
+          fotoPerfil: this.state.fotoPerfil
+        })
+    
+      .then(() => {
+        console.log("Perfil actualizado exitosamente");
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el perfil:", error);
+      });
+    
+
+    }
+
     render() {
       console.log(this.state.id)
       return (
@@ -79,6 +104,43 @@ class Profile extends Component {
             <Text style={styles.emailText}>Tu email: {auth.currentUser.email}</Text>
             <Text style={styles.creationTimeText}>Tu perfil se creó: {auth.currentUser.metadata.creationTime}</Text>
             <Image style={styles.profileImage} source={{ uri: this.state.infoUser.profileImage }} />
+            <TouchableOpacity  onPress={() => this.setState({stateEdit:true})}><Text>Editar perfil</Text></TouchableOpacity>
+            {this.state.stateEdit === true ? 
+            <View>
+
+          <TextInput
+                  style={styles.input}
+                  onChangeText={(text)=>this.setState({userName: text})}
+                  placeholder='Nombre de usuario*'
+                  keyboardType='default'
+                  value={this.state.userName}
+                  />
+             <TextInput
+             style={styles.input}
+             onChangeText={(text)=>this.setState({miniBio: text})}
+             placeholder='Descripcion'
+             keyboardType='email-address'
+             value={this.state.miniBio}
+         />
+
+       <TextInput
+             style={styles.input}
+             onChangeText={(url)=>this.setState({fotoPerfil: url})}
+             placeholder='Agrega el URL de tu foto'
+             keyboardType='email-address'
+             value={this.state.fotoPerfil}
+
+
+         />
+
+          <TouchableOpacity style={styles.button} onPress={()=>this.editProfile()}>
+                <Text style={styles.textButton}>Confirmar</Text>    
+                </TouchableOpacity>
+         </View> :
+         false
+          }
+
+
           </View>
   
           <FlatList
@@ -148,6 +210,15 @@ class Profile extends Component {
       textAlign: 'center',
       fontSize: 16,
       fontWeight: 'bold',
+    },
+    input: {
+      height: 40,
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 6,
+      marginVertical: 10,
     },
   });
   
