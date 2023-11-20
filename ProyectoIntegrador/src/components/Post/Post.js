@@ -98,6 +98,7 @@ class Post extends Component {
               </TouchableOpacity>
             )}
           </View>
+          <View style={styles.contenedorComentario}>
           <TouchableOpacity
             style={styles.bottonComentar}
             onPress={() =>
@@ -107,7 +108,9 @@ class Post extends Component {
             }
           >
             <Text>Comentar</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>  
+          </View>
+         
         </View>
       );
     }
@@ -149,6 +152,14 @@ class Post extends Component {
       justifyContent: 'space-between',
       alignItems: 'center', // Center items vertically
       marginBottom: 1,
+      marginLeft:3
+    },
+    contenedorComentario: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center', // Center items vertically
+      marginBottom: 1,
+
     },
     likeButton: {
       backgroundColor: 'blue',

@@ -115,23 +115,22 @@ class Camara extends Component{
 }
 
 const styles = StyleSheet.create({
+
     formContainer: {
         height: `60vh`,
         width: `100vw`,
+        alignItems: 'left', // Center items vertically
+        marginBottom: 1,
     },
     camara: {
         width: '50%',
         height: '50%',
     },
-    input: {
-      height: 20,
-      paddingVertical: 15,
-      paddingHorizontal: 10,
-      borderWidth: 1,
-      borderColor: "#ccc",
-      borderStyle: "solid",
-      borderRadius: 6,
-      marginVertical: 10,
+    containerButton: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center', // Center items vertically
+      
     },
     buttonFoto: {
         backgroundColor: 'rgb(0, 17, 88)',
@@ -151,7 +150,14 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       borderWidth: 1,
       borderStyle: "solid",
-      borderColor: "#28a745",
+      borderColor: "#28a745"},
+      
+    button: {
+        marginTop: 10,
+        backgroundColor: 'blue',
+        padding: 8,
+        borderRadius: 5,
+        marginLeft:45       
     },
     buttonDeny: {
         backgroundColor: 'rgb(195, 60, 29)',

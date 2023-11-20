@@ -56,7 +56,7 @@ class PostForm extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Haz un Posteo!</Text>
+                <Text style={styles.titulo}>Haz un Posteo!</Text>
                 {this.state.mostrarCamara ?
                 
                 <Camara onImageUpload={(url) => this.onImageUpload(url)}/>
@@ -111,6 +111,11 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
+    },
+    titulo:{
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
     }
 
 })
