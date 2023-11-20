@@ -56,11 +56,12 @@ class Home extends Component {
                     </View>
                     : 
         <>
-            <FlatList 
+        <View style={styles.containerHijo}>  <FlatList 
                 data = {this.state.posts}
                 keyExtractor={ unPost => unPost.id}
                 renderItem= { ({item}) => <Post dataPost = {item} navigation = {this.props.navigation} /> }
-            />
+            /></View>
+          
         </>
                 }
             </View>
@@ -75,6 +76,9 @@ const styles = StyleSheet.create({
       paddingTop: 20,
       height: '100%',
       backgroundColor: "white"
+    },
+    containerHijo:{
+        flex:5
     },
     title: {
       fontSize: 24,

@@ -97,7 +97,7 @@ class Post extends Component {
                 <Text style={styles.buttonText}>Like</Text>
               </TouchableOpacity>
             )}
-          </View>
+      
           <View style={styles.contenedorComentario}>
           <TouchableOpacity
             style={styles.bottonComentar}
@@ -110,6 +110,7 @@ class Post extends Component {
             <Text>Comentar</Text>
           </TouchableOpacity>  
           </View>
+          </View>
          
         </View>
       );
@@ -118,24 +119,28 @@ class Post extends Component {
   
   const styles = StyleSheet.create({
     postContainer: {
-      margin: 10,
-      padding: 10,
-      backgroundColor: '#fff',
-      borderRadius: 8,
-      elevation: 3,
+      flex: 1, 
+      marginBottom: 10, 
+      padding: 12,
+      paddingTop: 0,
+      borderTopWidth: 1,
+      borderRadius: 10,
+      borderColor: '#B5B5B5'
     },
     container: {
       marginBottom: 5,
     },
     ownerText: {
       fontWeight: 'bold',
+      marginLeft: 10,
+      marginBottom: 2.5,
+      fontSize: 16,
     },
     camara: {
-      width: '100%',
-      height: 200,
-      marginTop: 10,
-      marginBottom: 10,
-      borderRadius: 8,
+      height: 270,
+      marginBottom: 5,
+      alignItems: 'center',
+      borderRadius: 10
     },
     postText: {
       marginBottom: 10,
@@ -149,16 +154,15 @@ class Post extends Component {
     },
     contenedorLikes: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+
       alignItems: 'center', // Center items vertically
-      marginBottom: 1,
-      marginLeft:3
+    
     },
     contenedorComentario: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      marginBottom:10,
       alignItems: 'center', // Center items vertically
-      marginBottom: 1,
+     
 
     },
     likeButton: {
