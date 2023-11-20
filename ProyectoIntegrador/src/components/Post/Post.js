@@ -55,80 +55,126 @@ class Post extends Component {
         .catch( e => console.log(e))
     }
 
-    render(){
-      console.log(this.props.dataPost.id)
-        return (
-            <View style={styles.postContainer}>
-            <View>
-            <TouchableOpacity onPressOut={() => this.props.navigation.navigate('FriendProfile',{email: this.props.dataPost.datos.owner} )}>
-              <Text style={styles.ownerText}>{this.props.dataPost.datos.owner}</Text>
-            </TouchableOpacity>
-            </View>
-            <Image style={styles.camara} source={{uri: this.props.dataPost.datos.foto}} />
-            <Text style={styles.postText}>{this.props.dataPost.datos.textoPost}</Text>
-            <Text style={styles.likesText}> {this.state.cantidadDeLikes} likes</Text>
-            
+    render() {
+      return (
+        <View style={styles.postContainer}>
+          <TouchableOpacity
+            style={styles.container}
+            onPressOut={() =>
+              this.props.navigation.navigate('FriendProfile', {
+                email: this.props.dataPost.datos.owner,
+              })
+            }
+          >
+            <Text style={styles.ownerText}>
+              {this.props.dataPost.datos.owner}
+            </Text>
+          </TouchableOpacity>
+          <Image
+            style={styles.camara}
+            source={{ uri: this.props.dataPost.datos.foto }}
+          />
+          <Text style={styles.postText}>
+            {this.props.dataPost.datos.textoPost}
+          </Text>
+          <Text style={styles.likesText}>
+            {this.state.cantidadDeLikes} likes
+          </Text>
+          <Text style={styles.textoComentario}>{this.state.cantidadComentarios} comentarios</Text>
+          <View style={styles.contenedorLikes}>
             {this.state.like ? (
-              <TouchableOpacity style={styles.unlikeButton} onPress={() => this.disLike()}>
+              <TouchableOpacity
+                style={styles.unlikeButton}
+                onPress={() => this.disLike()}
+              >
                 <Text style={styles.buttonText}>Dislike</Text>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.likeButton} onPress={() => this.likear()}>
-                <Text style={styles.buttonText}>Likear</Text>
+              <TouchableOpacity
+                style={styles.likeButton}
+                onPress={() => this.likear()}
+              >
+                <Text style={styles.buttonText}>Like</Text>
               </TouchableOpacity>
-                )}
-
-                <Text> {this.state.cantidadComentarios} comentarios </Text>
-                     
-                <View>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentarios", {id: this.props.dataPost.id})} >
-                <Text> Comentar</Text>   
-                    </TouchableOpacity>
-                </View>   
-            </View>
-
-        )
+            )}
+          </View>
+          <TouchableOpacity
+            style={styles.bottonComentar}
+            onPress={() =>
+              this.props.navigation.navigate('Comentarios', {
+                id: this.props.dataPost.id,
+              })
+            }
+          >
+            <Text>Comentar</Text>
+          </TouchableOpacity>
+        </View>
+      );
     }
-
-}
-const styles = StyleSheet.create({
+  }
+  
+  const styles = StyleSheet.create({
     postContainer: {
+      margin: 10,
       padding: 10,
-      marginBottom: 10,
-      borderWidth: 1,
-      borderColor: '#ddd',
-      borderRadius: 5,
+      backgroundColor: '#fff',
+      borderRadius: 8,
+      elevation: 3,
     },
-    camara: {
-      width: '50%',
-      height: '100%',
-  },
+    container: {
+      marginBottom: 5,
+    },
     ownerText: {
       fontWeight: 'bold',
-      marginBottom: 5,
+    },
+    camara: {
+      width: '100%',
+      height: 200,
+      marginTop: 10,
+      marginBottom: 10,
+      borderRadius: 8,
     },
     postText: {
       marginBottom: 10,
     },
-    likesText: {
-      marginBottom: 10,
+    textoComentario: {
+      marginBottom: 5,
     },
-      likeButton: {
-        backgroundColor: 'green',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-      },
-      unlikeButton: {
-        backgroundColor: 'red',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-      },
-      buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-      },
-})
-
-export default Post;
+    likesText: {
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
+    contenedorLikes: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center', // Center items vertically
+      marginBottom: 1,
+    },
+    likeButton: {
+      backgroundColor: 'blue',
+      padding: 8,
+      borderRadius: 5,
+      marginRight: 5,
+    },
+    unlikeButton: {
+      backgroundColor: 'red',
+      padding: 8,
+      borderRadius: 5,
+    },
+    buttonText: {
+      color: '#fff',
+      textAlign: 'center',
+    },
+    bottonComentar: {
+      backgroundColor: '#4CAF50',
+      padding: 8,
+      borderRadius: 5,
+      marginLeft: 5, // Add margin to separate the buttons
+      marginTop: 10,
+    },
+  });
+  
+  
+  
+  
+  export default Post;
