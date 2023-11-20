@@ -29,7 +29,7 @@ class Home extends Component {
     componentDidMount(){
         db.collection("posts").orderBy("createdAt" , "desc").onSnapshot(
             listaPosts => {
-             let postAMostrar = [];
+            let postAMostrar = [];
              listaPosts.forEach(unPost => {
                 postAMostrar.push({
                     id: unPost.id,
