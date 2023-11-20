@@ -90,7 +90,9 @@ class Camara extends Component{
 
                 <>
                 <Image style={styles.camara} source={{uri: this.state. urlInternaFoto}} />
-                <View style={styles.formContainer}>
+    
+
+                <View style ={styles.containerButton}>
                     
                     <TouchableOpacity
                         style={styles.buttonAccept}
@@ -120,16 +122,20 @@ const styles = StyleSheet.create({
         height: `60vh`,
         width: `100vw`,
         alignItems: 'left', // Center items vertically
-        marginBottom: 1,
     },
+
+
     camara: {
-        width: '50%',
-        height: '50%',
+    marginTop:30,
+    marginBottom: 15,
+    height: '35vh'
     },
+
     containerButton: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center', // Center items vertically
+        margin: 4
+   
+
       
     },
     buttonFoto: {
@@ -141,6 +147,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "#28a745",
+        
       },
     buttonAccept: {
       backgroundColor: 'rgb(7, 112, 50)',
@@ -150,7 +157,9 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       borderWidth: 1,
       borderStyle: "solid",
-      borderColor: "#28a745"},
+      borderColor: "#28a745",
+      margin: 2
+    },
       
     button: {
         marginTop: 10,
@@ -168,6 +177,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "#28a745",
+        margin: 2
       },
     textButton: {
       color: "#fff",

@@ -9,7 +9,7 @@ class Profile extends Component {
       super(props)
       this.state = {
         allPosts: [],
-        infoUser: {},
+        infoUser: [],
         id: ''
       }
     }
@@ -51,8 +51,22 @@ class Profile extends Component {
       auth.signOut()
       this.props.navigation.navigate('Login')
     }
-
+    eliminarUsuario(id) {
+      const user = auth.currentUser;
+      user.delete()
+        .then(() => {
+          console.log('Usuario eliminado');
+        })
+        .then(() => {
+          db.collection('users').doc(id).delete()
+          this.props.navigation.navigate("Login")
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
     render() {
+      console.log(this.state.id)
       return (
         <ScrollView style={styles.container}>
           <View style={styles.profileInfo}>
@@ -76,6 +90,9 @@ class Profile extends Component {
           <TouchableOpacity onPress={() => this.signOut()} style={styles.logoutButton}>
             <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.eliminarUsuario(this.state.id)}>
+                  <Text style={styles.logoutButton}>Delete user</Text>
+                </TouchableOpacity>
         </ScrollView>
       );
     }

@@ -54,6 +54,10 @@ class Post extends Component {
         )
         .catch( e => console.log(e))
     }
+    eliminarPosteo(){
+      db.collection('posts').doc(this.props.dataPost.id).delete();
+      console.log('Se borro el posteo con exito');
+  }
 
     render() {
       return (
@@ -111,6 +115,13 @@ class Post extends Component {
           </TouchableOpacity>  
           </View>
           </View>
+          {this.props.dataPost.datos.owner == auth.currentUser.email?(
+                    <TouchableOpacity onPress={()=>this.eliminarPosteo()}>
+                        <Text>Borrar este posteo</Text>
+                    </TouchableOpacity>
+                ):
+                null
+                }
          
         </View>
       );
