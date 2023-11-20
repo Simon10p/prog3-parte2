@@ -5,12 +5,14 @@ import firebase from 'firebase';
 
 class Post extends Component {
 
+
     constructor(props){
         super(props);
         this.state = {
             like: false,
-            comentario: "",
-          cantidadDeLikes: this.props.dataPost.datos.likes.length
+            cantidadComentarios: this.props.dataPost.datos.comentarios.length,
+          cantidadDeLikes: this.props.dataPost.datos.likes.length,
+          stateMensaje: false
         }
     }
     componentDidMount(){
@@ -39,7 +41,7 @@ class Post extends Component {
         .catch( e => console.log(e))
     }
 
-    unlike(){
+    disLike(){
         //Quita un email en la propiedad like del post.
         db.collection('posts').doc(this.props.dataPost.id).update({
             likes:firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
@@ -53,21 +55,8 @@ class Post extends Component {
         .catch( e => console.log(e))
     }
 
-    comentar(texto){
-      const postId = this.props.dataPost.id;
-
-      db.collection("posts").doc(postId).update({
-        comentarios: firebase.firestore.FieldValue.arrayUnion(texto)
-      })
-      .then(() => {
-       
-        this.setState({ comentario: "" });
-      })
-      .catch(e => console.log(e));
-      }
-
-
     render(){
+      console.log(this.props.dataPost.id)
         return (
             <View style={styles.postContainer}>
             <View>
@@ -77,11 +66,11 @@ class Post extends Component {
             </View>
             <Image style={styles.camara} source={{uri: this.props.dataPost.datos.foto}} />
             <Text style={styles.postText}>{this.props.dataPost.datos.textoPost}</Text>
-            <Text style={styles.likesText}>Cantidad de Likes: {this.state.cantidadDeLikes}</Text>
+            <Text style={styles.likesText}> {this.state.cantidadDeLikes} likes</Text>
             
             {this.state.like ? (
-              <TouchableOpacity style={styles.unlikeButton} onPress={() => this.unlike()}>
-                <Text style={styles.buttonText}>Unlike</Text>
+              <TouchableOpacity style={styles.unlikeButton} onPress={() => this.disLike()}>
+                <Text style={styles.buttonText}>Dislike</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity style={styles.likeButton} onPress={() => this.likear()}>
@@ -89,10 +78,10 @@ class Post extends Component {
               </TouchableOpacity>
                 )}
 
-                <Text> {this.props.dataPost.datos.comments.length} comentarios </Text>
+                <Text> {this.state.cantidadComentarios} comentarios </Text>
                      
                 <View>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentarios", this.props.dataPost.datos.foto)} >
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentarios", {id: this.props.dataPost.id})} >
                 <Text> Comentar</Text>   
                     </TouchableOpacity>
                 </View>   

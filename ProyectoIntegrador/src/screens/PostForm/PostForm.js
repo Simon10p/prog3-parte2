@@ -41,7 +41,7 @@ class PostForm extends Component {
             textoPost: textoPost, //this.state.textoPost,
             createdAt: createdAt, //Date.now(), 
             foto: this.state.url,
-            comments: [],
+            comentarios: [],
             likes: []
         })
         .then( () => this.props.navigation.navigate("Home"))

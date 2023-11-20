@@ -2,6 +2,7 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet,FlatList} from 'rea
   import React, { Component } from 'react'
   import {db, auth} from '../../firebase/config'
   import firebase from 'firebase'
+import { ThemeProvider } from '@react-navigation/native'
   
   
   class Comment extends Component {
@@ -9,52 +10,56 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet,FlatList} from 'rea
       super(props)
       this.state = {
         newComment:'',
-        id:'',
-        data:[]
+        id: '',
+        data: {}
       }
     }
   
     componentDidMount(){
-      db
-      .collection('posts').where("foto", "==", this.props.route.params)
-      .onSnapshot(datos => {
-        let info = []
-        this.setState({
-          id: doc.id,
-          data: doc.data(),
-        })
-      })
-    }
-  
+     db.collection('posts').doc(this.props.route.params.id)
+    .onSnapshot(doc => {
+      
+       this.setState({
+         id: doc.id,
+        data: doc.data()
+        }) 
+       })
+}
     addComment(idDoc, text){
       db
       .collection('posts')
       .doc(idDoc)
       .update({
-        comments: firebase.firestore.FieldValue.arrayUnion({
+        comentarios: firebase.firestore.FieldValue.arrayUnion({
           owner:auth.currentUser.email,
           createdAt: Date.now(),
-          comment: text
+          comentarios: text
         })
       })
     }
-  
+   
     render() {
+      console.log(this.state.data, "aca esta la data");
       return (
         <View>
-        
+        {this.state.data.comentarios.length > 0 ? (
           <View style={styles.texto}>
-            <FlatList
-            data={this.state.data.comments}
-            keyExtractor={item => item.createdAt.toString()}
-            renderItem={({item}) => <View>
+          <FlatList
+          data={this.state.data.comentarios}
+          keyExtractor={item => item.createdAt.toString()}
+          renderItem={({item}) => (
+            <View>
               <Text style={styles.textox}>{item.owner} comentó:</Text>
-              <Text style={styles.textox}>{item.comment}</Text>
-            </View>
-              }
+            <Text style={styles.textox}>{item.comentarios}</Text>
+              </View>
+            
+        )}         
             />
           </View>
-          <View style={styles.boton}>
+        ):(
+            <Text>No hay comentarios en esta publicacion</Text>
+            )}
+            <View style={styles.boton}>
             <TextInput
               onChangeText={text => this.setState({newComment: text})}
               style = {styles.input}
@@ -63,15 +68,15 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet,FlatList} from 'rea
               value={this.state.newComment}
             />
             <TouchableOpacity onPress={()=> this.addComment(this.state.id, this.state.newComment)}>
-              <Text style={styles.boton}>Enviar comentario</Text>
+              <Text style={styles.boton}>Agregar comentario</Text>
             </TouchableOpacity>
           </View>
-
-          <Text onPress={ () => this.props.navigation.navigate ("TabNavigation")} style={styles.botonx}>Volver al inicio</Text>
+          <Text onPress={ () => this.props.navigation.navigate ("Menu")} style={styles.botonx}>Volver al inicio</Text>
         </View>
-      )
+        );
+      }
     }
-  }
+
   
   const styles = StyleSheet.create({
     input: {
