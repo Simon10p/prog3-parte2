@@ -10,21 +10,25 @@ import { ThemeProvider } from '@react-navigation/native'
       super(props)
       this.state = {
         newComment:'',
-        id: '',
-        data: {}
+        id: this.props.route.params.id,
+        comments: []
       }
     }
   
+    
     componentDidMount(){
-     db.collection('posts').doc(this.props.route.params.id)
+    db
+    .collection('posts')
+    .doc(this.state.id)
     .onSnapshot(doc => {
-      
+
        this.setState({
-         id: doc.id,
-        data: doc.data()
+        comments: doc.data().comentarios
         }) 
+
        })
 }
+
     addComment(idDoc, text){
       db
       .collection('posts')
@@ -36,16 +40,20 @@ import { ThemeProvider } from '@react-navigation/native'
           comentarios: text
         })
       })
+      .catch(e => console.log(e))
+    
+      this.setState({
+        newComment: ''
+      })
     }
    
     render() {
-      console.log(this.state.data, "aca esta la data");
       return (
         <View>
-        {this.state.data.comentarios.length > 0 ? (
-          <View style={styles.texto}>
+        {this.state.comments.length > 0 ? (
+        <View style={styles.texto}>
           <FlatList
-          data={this.state.data.comentarios}
+          data={this.state.comments}
           keyExtractor={item => item.createdAt.toString()}
           renderItem={({item}) => (
             <View>
@@ -75,7 +83,7 @@ import { ThemeProvider } from '@react-navigation/native'
         </View>
         );
       }
-    }
+}
 
   
   const styles = StyleSheet.create({
