@@ -1,13 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
-
-import Octicons from '@expo/vector-icons/Octicons'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Entypo from '@expo/vector-icons/Entypo'
-import Ionicons from '@expo/vector-icons/Ionicons'
-
-
 import Home from "../../screens/Home/Home";
 import PostForm from "../../screens/PostForm/PostForm";
 import Profile from "../../screens/Profile/Profile";
@@ -28,7 +23,7 @@ class Menu extends Component {
               name="Home" 
               component={Home} 
               options={{
-                tabBarIcon: () => <Entypo name="home" size={24} color="black" />,
+                tabBarIcon: () => <Entypo name="home" size={25} color="black" />,
                 headerShown: false }} 
             />
 
@@ -36,7 +31,7 @@ class Menu extends Component {
              name="Post" 
              component={PostForm} 
              options={{
-                tabBarIcon: () => <Octicons name="diff-added" size={24} color="black" />,
+                tabBarIcon: () => <MaterialIcons name="post-add" size={25} color="black" />,
                 headerShown: false }} 
             />
 
@@ -44,7 +39,7 @@ class Menu extends Component {
               name="Buscador" 
               component={Buscador} 
               options={
-              {tabBarIcon: () => <FontAwesome name="search" size={24} color="black" />,
+              {tabBarIcon: () => <MaterialIcons name="person-search" size={25} color="black" />,
               headerShown: false }}
             />
 
@@ -52,7 +47,7 @@ class Menu extends Component {
               name="Profile" 
               component={Profile}  
               options={
-              {tabBarIcon: () => <Ionicons name="person" size={24} color="black" />,
+              {tabBarIcon: () => <Entypo name="man" size={25} color="black" />,
               headerShown: false }}
             />
 

@@ -51,35 +51,38 @@ import { ThemeProvider } from '@react-navigation/native'
       return (
         <View>
         {this.state.comments.length > 0 ? (
-        <View style={styles.texto}>
+        <View style={styles.containerComments}>
           <FlatList
           data={this.state.comments}
           keyExtractor={item => item.createdAt.toString()}
           renderItem={({item}) => (
             <View>
-              <Text style={styles.textox}>{item.owner} comentó:</Text>
-            <Text style={styles.textox}>{item.comentarios}</Text>
+              <Text style={styles.comentado}>{item.owner} comentó:</Text>
+            <Text style={styles.comentado}>{item.comentarios}</Text>
               </View>
             
         )}         
             />
           </View>
         ):(
-            <Text>No hay comentarios en esta publicacion</Text>
+          <View>
+             <Text style= {styles.noComment}>Todavía no hay comentarios. Se el primero en comentar!</Text>
+          </View>
+           
             )}
             <View style={styles.boton}>
             <TextInput
               onChangeText={text => this.setState({newComment: text})}
               style = {styles.input}
               keyboardType='default'
-              placeholder='Agrega un comentario'
+              placeholder='Escribe lo que piensas!'
               value={this.state.newComment}
             />
             <TouchableOpacity onPress={()=> this.addComment(this.state.id, this.state.newComment)}>
-              <Text style={styles.boton}>Agregar comentario</Text>
+              <Text style={styles.agregar}>Agregar comentario</Text>
             </TouchableOpacity>
           </View>
-          <Text onPress={ () => this.props.navigation.navigate ("Menu")} style={styles.botonx}>Volver al inicio</Text>
+          <Text onPress={ () => this.props.navigation.navigate ("Menu")} style={styles.goBack}>Volver al Home</Text>
         </View>
         );
       }
@@ -87,57 +90,69 @@ import { ThemeProvider } from '@react-navigation/native'
 
   
   const styles = StyleSheet.create({
-    input: {
+    noComment: {
       justifyContent: 'center',
       textAlign: 'center' ,
-      fontFamily: 'monospace',
+      fontFamily: 'sans-serif-light',
+      fontWeight: 'normal'
+    },
+    input: {
+      justifyContent: 'center',
+      fontWeight: 'normal',
+      textAlign: 'center' ,
+      fontFamily: 'sans-serif-light',
+      color: 'rgb(100, 100, 100)',
     } ,
 
-    texto:{
+    containerComments:{
       backgroundColor: 'rgb(255,255,242)',
-      fontFamily: 'monospace',
-      fontSize: 13,
-      margin: 14,
-      borderRadius: 12,
       textAlign: 'center',
       color: 'rgb(128, 128, 128)',
+      fontFamily: 'sans-serif-light',
+      fontWeight: 'normal',
+      fontSize: 15,
+      margin: 14,
+      borderRadius: 8,
       padding: 8
 
   }, 
 
-  textox:{
+  comentado:{
     backgroundColor: 'rgb(255,255,242)',
-    fontFamily: 'monospace',
-    fontSize: 13,
+    fontFamily: 'sans-serif-light',
+    fontWeight: 'normal',
+    fontSize: 15,
     margin: 1,
-    borderRadius: 12,
+    borderRadius: 8,
     textAlign: 'center',
-    color: 'rgb(128, 128, 128)',
+    color: 'rgb(50, 50, 50)',
     padding: 8
 
 }, 
 
-  boton:{
-    fontFamily: 'monospace',
-    fontSize: 16,
+  agregar:{
+    fontFamily: 'sans-serif-light',
+    fontWeight: 'normal',
+    fontSize: 20,
     margin: 10,
-    backgroundColor: 'rgb(173, 216, 230)',
-    borderRadius: 20,
+    backgroundColor: 'rgb(84, 123, 144)',
+    borderRadius: 14,
     textAlign: 'center',
+    color: 'rgb(50, 50, 50)',
     padding: 5
   
   },
 
-  botonx:{
-    fontFamily: 'monospace',
-    fontSize: 16,
+  goBack:{
+    fontFamily: 'sans-serif-light',
+    fontWeight: 'normal',
+    fontSize: 20,
     margin: 10,
-    backgroundColor: 'rgb(173, 216, 230)',
-    borderRadius: 20,
-    textAlign: 'center',
+    backgroundColor: 'rgb(255, 71, 90)',
     justifyContent: 'flex-end' ,
-    padding: 5
-  
+    padding: 5,
+    borderRadius: 14,
+    textAlign: 'center'
   },
   })
   

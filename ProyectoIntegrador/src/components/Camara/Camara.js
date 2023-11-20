@@ -79,7 +79,7 @@ class Camara extends Component{
                     <Camera style={styles.camara} type={Camera.Constants.Type.front} ref={metodosCamara => this.metodosDeCamara = metodosCamara}/>
                     <View style ={styles.containerButton}>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.buttonFoto}
                          onPress={() => this.sacarFotos()}
                         >
                         <Text style={styles.textButton}>Sacar foto</Text>
@@ -93,13 +93,13 @@ class Camara extends Component{
                 <View style={styles.formContainer}>
                     
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.buttonAccept}
                          onPress={() => this.guardarLaFotoEnStorage()}
                         >
                         <Text style={styles.textButton}>Aceptar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.buttonDeny}
                          onPress={() => this.rechazarFoto()}
                         >
                         <Text style={styles.textButton}>Rechazar</Text>
@@ -133,8 +133,18 @@ const styles = StyleSheet.create({
       borderRadius: 6,
       marginVertical: 10,
     },
-    button: {
-      backgroundColor: "blue",
+    buttonFoto: {
+        backgroundColor: 'rgb(0, 17, 88)',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#28a745",
+      },
+    buttonAccept: {
+      backgroundColor: 'rgb(7, 112, 50)',
       paddingHorizontal: 10,
       paddingVertical: 6,
       textAlign: "center",
@@ -143,6 +153,16 @@ const styles = StyleSheet.create({
       borderStyle: "solid",
       borderColor: "#28a745",
     },
+    buttonDeny: {
+        backgroundColor: 'rgb(195, 60, 29)',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#28a745",
+      },
     textButton: {
       color: "#fff",
     },
